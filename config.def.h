@@ -131,9 +131,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_minus,  defaultgaps,    {0} },
 
     /* Sound */
-    { MODKEY,                       XF86XK_AudioLowerVolume,     spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-") },
-    { MODKEY,                       XF86XK_AudioRaiseVolume,     spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+") },
-    { MODKEY,                       XF86XK_AudioMute,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
+    { MODKEY,                       XF86XK_AudioLowerVolume,     spawn,          SHCMD("amixer -D pulse sset Master 2%-") },
+    { MODKEY,                       XF86XK_AudioRaiseVolume,     spawn,          SHCMD("amixer -D pulse sset Master 2%+") },
+    { MODKEY,                       XF86XK_AudioMute,            spawn,          SHCMD("amixer -D pulse sset Master mute") },
 
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
