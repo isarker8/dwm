@@ -5,11 +5,6 @@ static       unsigned int borderpx  = 3;        /* border pixel of windows */
 static       unsigned int snap      = 32;       /* snap pixel */
 static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
-static       unsigned int gappih    = 5;        /* horiz inner gap between windows */
-static       unsigned int gappiv    = 5;        /* vert inner gap between windows */
-static       unsigned int gappoh    = 5;        /* horiz outer gap between windows and screen edge */
-static       unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13", "Font Awesome 6 Free Solid:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13";
 #include "/home/isarker/.cache/wal/colors-wal-dwm.h"
@@ -33,26 +28,12 @@ static int nmaster = 1;              /* number of clients in master area */
 static int resizehints = 1;          /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 60;  /* refresh rate (per second) for client move/resize */
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
-#include "vanitygaps.c"
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[@]",      spiral },         /* first entry is default */
-	{ "[M]",      monocle },
-	{ "[]=",      tile },
-	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
+ 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ NULL,       NULL },
+ 	{ "[M]",      monocle },
 };
 
 /* key definitions */
@@ -108,24 +89,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-
-    /* gaps control */
-	{ MODKEY,					XK_minus,  incrgaps,       {.i = -3 } }, /* all */
-	{ MODKEY,					XK_equal,  incrgaps,       {.i = +3 } },
-	{ MODKEY|Mod1Mask,              XK_i,      incrigaps,      {.i = +1 } }, /* inner */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_o,      incrogaps,      {.i = +1 } }, /* outer */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_6,      incrihgaps,     {.i = +1 } }, /* inner horiz */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_7,      incrivgaps,     {.i = +1 } }, /* inner vert */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_8,      incrohgaps,     {.i = +1 } }, /* outer horiz */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_9,      incrovgaps,     {.i = +1 } }, /* outer vert */
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  togglegaps,     {0} },
-	{ MODKEY|ShiftMask,             XK_minus,  defaultgaps,    {0} },
 
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
