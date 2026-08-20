@@ -3,6 +3,7 @@
 /* appearance */
 static       unsigned int borderpx  = 3;        /* border pixel of windows */
 static       unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappx     = 5;        /* gaps between windows */
 static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13", "Font Awesome 6 Free Solid:size=13" };
@@ -89,6 +90,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+
+    /* Gaps */
+
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
