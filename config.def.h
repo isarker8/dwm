@@ -6,6 +6,8 @@ static       unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13", "Font Awesome 6 Free Solid:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13";
 #include "/home/isarker/.cache/wal/colors-wal-dwm.h"
