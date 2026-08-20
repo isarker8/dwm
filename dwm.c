@@ -61,7 +61,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeUrg }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -829,29 +829,28 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - x) > bh) {
-            if (m->sel) {
-                /* Apply FriBidi first so we can measure the reordered string */
-                apply_fribidi(m->sel->name);
+    if ((w = m->ww - tw - x) > bh) {
+		if (m->sel) {
+			/* Apply FriBidi first so we can measure the reordered string */
+			apply_fribidi(m->sel->name);
 
-                /* Calculate mid using fribidi_text length */
-                int mid = (m->ww - (int)TEXTW(fribidi_text)) / 2 - x;
-                mid = mid >= lrpad / 2 ? mid : lrpad / 2;
+			/* Calculate mid using fribidi_text length */
+			int mid = (m->ww - (int)TEXTW(fribidi_text)) / 2 - x;
+			mid = mid >= lrpad / 2 ? mid : lrpad / 2;
 
-                drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-                /* Pass 'mid' as the padding parameter and 'fribidi_text' as the string */
-                drw_text(drw, x, 0, w, bh, mid, fribidi_text, 0);
+			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+			/* Pass 'mid' as the padding parameter and 'fribidi_text' as the string */
+			drw_text(drw, x, 0, w, bh, mid, fribidi_text, 0);
 
-                if (m->sel->isfloating)
-                    drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
-        } else {
+			if (m->sel->isfloating)
+				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+		} else {
 			drw_setscheme(drw, scheme[SchemeNorm]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 }
-
 void
 drawbars(void)
 {
