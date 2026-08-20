@@ -63,9 +63,6 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
-/* For using X11 Keybinds */
-#include <X11/XF86keysym.h>
-
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define STATUSBAR "dwmblocks"
@@ -129,11 +126,6 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  togglegaps,     {0} },
 	{ MODKEY|ShiftMask,             XK_minus,  defaultgaps,    {0} },
-
-    /* Sound */
-    { MODKEY,                       XF86XK_AudioLowerVolume,     spawn,          SHCMD("amixer -D pulse sset Master 2%-") },
-    { MODKEY,                       XF86XK_AudioRaiseVolume,     spawn,          SHCMD("amixer -D pulse sset Master 2%+") },
-    { MODKEY,                       XF86XK_AudioMute,            spawn,          SHCMD("amixer -D pulse sset Master mute") },
 
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
