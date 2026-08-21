@@ -36,8 +36,8 @@
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
-#include <X11/Xutil.h>
 #include <X11/Xresource.h>
+#include <X11/Xutil.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
@@ -58,6 +58,21 @@
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+#define XRDB_LOAD_COLOR(R,V)    if (XrmGetResource(xrdb, R, NULL, &type, &value) == True) { \
+                                  if (value.addr != NULL && strnlen(value.addr, 8) == 7 && value.addr[0] == '#') { \
+                                    int i = 1; \
+                                    for (; i <= 6; i++) { \
+                                      if (value.addr[i] < 48) break; \
+                                      if (value.addr[i] > 57 && value.addr[i] < 65) break; \
+                                      if (value.addr[i] > 70 && value.addr[i] < 97) break; \
+                                      if (value.addr[i] > 102) break; \
+                                    } \
+                                    if (i == 7) { \
+                                      strncpy(V, value.addr, 7); \
+                                      V[7] = '\0'; \
+                                    } \
+                                  } \
+                                }
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
@@ -68,7 +83,6 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
-enum XResType {STRING, INTEGER, FLOAT};
 
 typedef union {
 	int i;
@@ -146,12 +160,6 @@ typedef struct {
 } Rule;
 
 
-typedef struct {
-	const char *name;
-	enum XResType type;
-	void *dst;
-} XResPref;
-
 
 /* function declarations */
 static void apply_fribidi(char *str);
@@ -193,6 +201,8 @@ static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
+static void loadxrdb(void);
+static void xrdb(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
@@ -250,10 +260,8 @@ static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
+static void xrdb(const Arg *arg);
 static void zoom(const Arg *arg);
-static void xresload(const XResPref *resource);
-static void xresupdate(void);
-static void xresreload(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -294,7 +302,6 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root, wmcheckwin;
-static XrmDatabase xrdb = NULL;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -570,7 +577,6 @@ cleanup(void)
 	free(scheme);
 	XDestroyWindow(dpy, wmcheckwin);
 	drw_free(drw);
-	XrmDestroyDatabase(xrdb);
 	XSync(dpy, False);
 	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
 	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
@@ -1154,6 +1160,37 @@ killclient(const Arg *arg)
 		XSetErrorHandler(xerror);
 		XUngrabServer(dpy);
 	}
+}
+
+void
+loadxrdb()
+{
+  Display *display;
+  char * resm;
+  XrmDatabase xrdb;
+  char *type;
+  XrmValue value;
+
+  display = XOpenDisplay(NULL);
+
+  if (display != NULL) {
+    resm = XResourceManagerString(display);
+
+    if (resm != NULL) {
+      xrdb = XrmGetStringDatabase(resm);
+
+      if (xrdb != NULL) {
+        XRDB_LOAD_COLOR("dwm.normbordercolor", normbordercolor);
+        XRDB_LOAD_COLOR("dwm.normbgcolor", normbgcolor);
+        XRDB_LOAD_COLOR("dwm.normfgcolor", normfgcolor);
+        XRDB_LOAD_COLOR("dwm.selbordercolor", selbordercolor);
+        XRDB_LOAD_COLOR("dwm.selbgcolor", selbgcolor);
+        XRDB_LOAD_COLOR("dwm.selfgcolor", selfgcolor);
+      }
+    }
+  }
+
+  XCloseDisplay(display);
 }
 
 void
@@ -2315,6 +2352,17 @@ xerrorstart(Display *dpy, XErrorEvent *ee)
 }
 
 void
+xrdb(const Arg *arg)
+{
+  loadxrdb();
+  int i;
+  for (i = 0; i < LENGTH(colors); i++)
+                scheme[i] = drw_scm_create(drw, colors[i], 3);
+  focus(NULL);
+  arrange(NULL);
+}
+
+void
 zoom(const Arg *arg)
 {
 	Client *c = selmon->sel;
@@ -2324,69 +2372,6 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
-}
-
-void
-xresload(const XResPref *resource)
-{
-	char *type;
-	XrmValue ret;
-
-	if (!XrmGetResource(xrdb, resource->name, NULL, &type, &ret))
-		return;
-	if (!ret.addr || strncmp(type, "String", sizeof("String")))
-		return;
-
-	switch (resource->type) {
-	case STRING:
-		*(char **)resource->dst = ret.addr;
-		break;
-	case INTEGER:
-		*(int *)resource->dst = strtoul(ret.addr, NULL, 10);
-		break;
-	case FLOAT:
-		*(float *)resource->dst = strtof(ret.addr, NULL);
-		break;
-	}
-}
-
-void
-xresupdate(void)
-{
-	Display *display;
-	char *resm;
-	const XResPref *p;
-
-	display = XOpenDisplay(NULL);
-	if (!display)
-		return;
-	resm = XResourceManagerString(display);
-	if (resm) {
-		if (xrdb)
-			XrmDestroyDatabase(xrdb);
-		xrdb = XrmGetStringDatabase(resm);
-		if (xrdb) {
-			for (p = resources; p < resources + LENGTH(resources); ++p)
-				xresload(p);
-		}
-	}
-	XCloseDisplay(display);
-}
-
-void
-xresreload(const Arg *arg)
-{
-	int i;
-
-	xresupdate();
-	for (i = 0; i < LENGTH(colors); ++i) {
-		drw_scm_free(drw, scheme[i], 3);
-		scheme[i] = drw_scm_create(drw, colors[i], 3);
-	}
-	drw_fontset_free(drw->fonts);
-	drw_fontset_create(drw, fonts, LENGTH(fonts));
-	focus(NULL);
-	arrange(NULL);
 }
 
 int
@@ -2401,8 +2386,8 @@ main(int argc, char *argv[])
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("dwm: cannot open display");
 	checkotherwm();
-	XrmInitialize();
-	xresupdate();
+        XrmInitialize();
+        loadxrdb();
 	setup();
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath proc exec", NULL) == -1)

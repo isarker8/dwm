@@ -11,7 +11,22 @@ static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13";
 
-#include "/home/isarker/.cache/wal/colors-wal-dwm.h"
+/* default colors used if xrdb is not loaded */
+static char normbgcolor[]           = "#2e3440";
+static char normbordercolor[]       = "#4c566a";
+static char normfgcolor[]           = "#d8dee9";
+
+static char selfgcolor[]            = "#eceff4";
+static char selbordercolor[]        = "#a3be8c";
+static char selbgcolor[]            = "#b48ead";
+
+static char *colors[][3] = {
+        /*               fg           bg           border   */
+		[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+		[SchemeSel]  = { selbgcolor,  selfgcolor,  selbordercolor  },
+		/* for bar --> {text, background, null} */
+		[SchemeStatus]  = { normfgcolor, normbgcolor,  normbgcolor  }, /* status R */
+};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -59,13 +74,13 @@ static const char *termcmd[]  = { "st", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_z,      zoom,           {0} },
@@ -82,7 +97,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_F5,     xresreload,     {0} },
+	{ MODKEY|ControlMask,           XK_BackSpace, xrdb,        {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -95,14 +110,13 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
     /* Gaps */
-
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
-    
+    { MODKEY|ShiftMask,		        XK_w,      spawn,          {.v = (const char*[]){ "wallpapermenu", NULL } } }, 
 };
 
 /* button definitions */
@@ -131,26 +145,3 @@ static const Button buttons[] = {
    	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("st -e vim ~/repos/Suckless/dwmblocks/blocks.h") },
 };
 
-/* X resources to update */
-static const XResPref resources[] = {
-	/* name                type     address */
-	{ "dwm.font",          STRING,  &fonts[0] },
-	{ "dwm.dmenufont",     STRING,  &dmenucmd[4] },
-	{ "dwm.background",    STRING,  &dmenucmd[6] },
-	{ "dwm.foreground",    STRING,  &dmenucmd[8] },
-	{ "dwm.backgroundSel", STRING,  &dmenucmd[10] },
-	{ "dwm.foregroundSel", STRING,  &dmenucmd[12] },
-	{ "dwm.foreground",    STRING,  &colors[SchemeNorm][ColFg] },
-	{ "dwm.background",    STRING,  &colors[SchemeNorm][ColBg] },
-	{ "dwm.border",        STRING,  &colors[SchemeNorm][ColBorder] },
-	{ "dwm.foregroundSel", STRING,  &colors[SchemeSel][ColFg] },
-	{ "dwm.backgroundSel", STRING,  &colors[SchemeSel][ColBg] },
-	{ "dwm.borderSel",     STRING,  &colors[SchemeSel][ColBorder] },
-	{ "dwm.borderpx",      INTEGER, &borderpx },
-	{ "dwm.snap",          INTEGER, &snap },
-	{ "dwm.showbar",       INTEGER, &showbar },
-	{ "dwm.topbar",        INTEGER, &topbar },
-	{ "dwm.nmaster",       INTEGER, &nmaster },
-	{ "dwm.resizehints",   INTEGER, &resizehints },
-	{ "dwm.mfact",         FLOAT,   &mfact },
-};
