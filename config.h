@@ -8,7 +8,7 @@ static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13", "Font Awesome 6 Free Solid:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13";
 
 #include "/home/isarker/.cache/wal/colors-wal-dwm.h"
@@ -59,7 +59,7 @@ static const char *termcmd[]  = { "st", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
