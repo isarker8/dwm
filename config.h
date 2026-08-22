@@ -23,9 +23,13 @@ static char selbgcolor[]            = "#b48ead";
 static char *colors[][3] = {
         /*               fg           bg           border   */
 		[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-		[SchemeSel]  = { selbgcolor,  selfgcolor,  selbordercolor  },
+		[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 		/* for bar --> {text, background, null} */
 		[SchemeStatus]  = { normfgcolor, normbgcolor,  normbgcolor  }, /* status R */
+        [SchemeTagsSel]  = { normfgcolor, normbgcolor,  normbgcolor  }, /* tag L selected */
+		[SchemeTagsNorm]  = { selbordercolor, normbgcolor,  normbgcolor  }, /* tag L unselected */
+		[SchemeInfoSel]  = { normfgcolor, normbgcolor,  normbgcolor  }, /* info M selected */
+		[SchemeInfoNorm]  = { normfgcolor, normbgcolor,  normbgcolor  }, /* info M unselected */
 };
 
 /* tagging */
@@ -46,7 +50,7 @@ static float mfact = 0.55;           /* factor of master area size [0.05..0.95] 
 static int nmaster = 1;              /* number of clients in master area */
 static int resizehints = 0;          /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 60;  /* refresh rate (per second) for client move/resize */
+static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -66,6 +70,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define STATUSBAR "dwmblocks"
+#define BROWSER "waterfox"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -97,7 +102,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_BackSpace, xrdb,        {0} },
+	{ MODKEY|ControlMask,           XK_BackSpace, xrdb,        {.v = NULL } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -117,6 +122,7 @@ static const Key keys[] = {
     /* Other */
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
     { MODKEY|ShiftMask,		        XK_w,      spawn,          {.v = (const char*[]){ "wallpapermenu", NULL } } }, 
+    { MODKEY,                       XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
 };
 
 /* button definitions */
