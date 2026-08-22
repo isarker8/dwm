@@ -123,6 +123,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
     { MODKEY|ShiftMask,		        XK_w,      spawn,          {.v = (const char*[]){ "wallpapermenu", NULL } } }, 
     { MODKEY,                       XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("screenshot") },
 };
 
 /* button definitions */
