@@ -127,7 +127,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
     { MODKEY,                       XK_c,      spawn,          SHCMD("clipboard add") },
     { MODKEY,                       XK_v,      spawn,          SHCMD("clipboard sel") },
-    { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("layout") },
+    { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },
 };
 
 /* button definitions */
