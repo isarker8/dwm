@@ -124,6 +124,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,		        XK_w,      spawn,          {.v = (const char*[]){ "wallpapermenu", NULL } } }, 
     { MODKEY,                       XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
     { MODKEY,                       XK_Print,  spawn,          SHCMD("screenshot") },
+    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
 };
 
 /* button definitions */
