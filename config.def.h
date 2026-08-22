@@ -102,7 +102,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_BackSpace, xrdb,        {.v = NULL } },
+	{ MODKEY,                       XK_BackSpace, xrdb,        {.v = NULL } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -127,7 +127,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
     { MODKEY,                       XK_c,      spawn,          SHCMD("clipboard add") },
     { MODKEY,                       XK_v,      spawn,          SHCMD("clipboard sel") },
-    { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("layout") },
+    { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("layout") },
 };
 
 /* button definitions */
