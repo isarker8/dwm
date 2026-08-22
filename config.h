@@ -125,9 +125,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
-    { MODKEY,                       XK_c,      spawn,          SHCMD("cliphist add") },    /* Copy from primary */
-    { MODKEY,                       XK_v,      spawn,          SHCMD("cliphist top") },    /* Copy from primary and add to top of cliphist then paste */
-    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("cliphist sel") },    /* Select from cliphist then paste */
+    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -l 5 -i -p 'Clipboard:'") },    /* Select from clipmenu then paste */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
 };
 
