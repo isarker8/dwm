@@ -126,7 +126,6 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -l 5 -i -p 'Clipboard:'") },    /* Select from clipmenu add to primary */
-    { MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("clipdelmenu -b -l 5 -i -p 'Delete Entry:'") },
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
 };
 
