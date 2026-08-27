@@ -9,7 +9,7 @@ static       int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13" };
-static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13";
+static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=15";
 
 /* default colors used if xrdb is not loaded */
 static char normbgcolor[]           = "#2e3440";
