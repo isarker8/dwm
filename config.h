@@ -122,7 +122,7 @@ static const Key keys[] = {
     /* Other */
     { MODKEY,                       XK_w,      spawn,          {.v = (const char*[]){ BROWSER, NULL } } },
     { MODKEY|ShiftMask,		        XK_w,      spawn,          {.v = (const char*[]){ "wallpapermenu", NULL } } }, 
-    { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") }, 
+    { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("powermenu") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -l 5 -i -p 'Clipboard:'") },    /* Select from clipmenu add to primary */
