@@ -125,7 +125,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("powermenu") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
-    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -bw 3 -l 5 -i -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
+    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -bw 3 -l 5 -z 1914 -i -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bookmarks") },    
 
