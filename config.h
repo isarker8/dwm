@@ -33,7 +33,7 @@ static char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", " ", "٣", "٤", "٥", "٦", "٧", "٨", " " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -41,8 +41,9 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Alacritty",NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "vimb",     NULL,       NULL,       1 << 0,       0,           -1 },
+    { "mpv",      NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -125,10 +126,10 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("powermenu") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
-    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -b -bw 3 -l 5 -z 1914 -i -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
+    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -c -bw 3 -g 2 -l 5 -i -F -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
-    { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks del") },
+    { MODKEY|ShiftMask,             XK_z,      spawn,          SHCMD("bmks del") },
 
 };
 
