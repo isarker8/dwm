@@ -8,7 +8,7 @@ static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13:style=Bold" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=15";
 
 /* default colors used if xrdb is not loaded */
@@ -41,8 +41,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Alacritty",NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "vimb",     NULL,       NULL,       1 << 0,       0,           -1 },
+	{ "qutebrowser",     NULL,       NULL,       1 << 0,       0,           -1 },
     { "mpv",      NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -71,7 +70,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define STATUSBAR "dwmblocks"
-#define BROWSER "vimb"
+#define BROWSER "qutebrowser"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -129,7 +128,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -c -bw 3 -g 2 -l 5 -i -F -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
-    { MODKEY|ShiftMask,             XK_z,      spawn,          SHCMD("bmks del") },
+    { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks del") },
 
 };
 
@@ -140,6 +139,14 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkTagBar,            0,              Button1,        view,           {0} },
+	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("alacritty -e vim ~/repos/Suckless/dwmblocks-async/config.h") },
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
@@ -149,13 +156,5 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              7,              sigstatusbar,   {.i = 7} },
 	{ ClkStatusText,        0,              8,              sigstatusbar,   {.i = 8} },
 	{ ClkStatusText,        0,              9,              sigstatusbar,   {.i = 9} },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("st -e vim ~/repos/Suckless/dwmblocks/blocks.h") },
 };
 
