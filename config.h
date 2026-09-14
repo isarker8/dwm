@@ -127,7 +127,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -c -bw 3 -g 2 -l 5 -i -F -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
-    { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks del") },
+    { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks add") },
 
 };
 
@@ -145,7 +145,7 @@ static const Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("alacritty -e vim ~/repos/Suckless/dwmblocks-async/config.h") },
+   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("alacritty -e vim ~/clones/Suckless/dwmblocks-async/config.h") },
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
