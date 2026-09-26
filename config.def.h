@@ -128,6 +128,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
     { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks add") },
+    { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("yazi .") },
 
 };
 
