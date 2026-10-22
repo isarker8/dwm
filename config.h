@@ -124,11 +124,12 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("powermenu") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
+    { MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("wifi -d") },
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -c -bw 3 -g 2 -l 5 -i -F -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
     { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks add") },
-    { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("yazi .") },
+    { MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){ "alacritty", "-e", "yazi", NULL } } },
 
 };
 
