@@ -1,11 +1,9 @@
 ## dwm - dynamic window manager - ابراهيم's build
-![my build]
 
 note: I'd highly recommend setting up your own build! using mine or anyone else's is a starting point, but patching dwm manually not only allows for precise customization, but it will also allow you to learn how your WM works.
 a great way to test build changes without refreshing/restarting your running WM is with [Xephyr](https://wiki.archlinux.org/title/Xephyr), a nested X server that runs as an application.
 
 ## patches applied:
-some occasional modification here and there;
 * [attachaside](https://dwm.suckless.org/patches/attachaside/)
 * [barpadding](https://dwm.suckless.org/patches/barpadding/)
 * [bidi (RTL TEXT)](https://dwm.suckless.org/patches/bidi/)
