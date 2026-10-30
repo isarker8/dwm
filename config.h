@@ -9,7 +9,6 @@ static       int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13:style=Bold" };
-static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=15";
 
 /* default colors used if xrdb is not loaded */
 static char normbgcolor[]           = "#2e3440";
@@ -72,13 +71,12 @@ static const Layout layouts[] = {
 #define BROWSER "waterfox"
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-c", "-l", " 5", "-bw", " 3", "-p", "Run:", NULL };
+static const char *roficmd[] = { "rofi", "-show", "drun", "-font", "Iosevka Nerd Font 13", "-theme-str", "listview {lines: 5;}", "-p", "Run:", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -125,11 +123,11 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
     { MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("wifi -d") },
-    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -c -bw 3 -g 2 -l 5 -i -F -p '󰅌 Clipboard:'") },    /* Select from clipmenu add to primary */
+    { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -i -p '󰅌 Clipboard:'") },
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
     { MODKEY|ControlMask|ShiftMask, XK_b,      spawn,          SHCMD("bmks add") },
-    { MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){ "alacritty", "-e", "thunar", NULL } } },
+    { MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){ "thunar", NULL } } },
 
 };
 
