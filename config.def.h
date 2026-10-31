@@ -8,7 +8,7 @@ static       int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "Noto Kufi Arabic:size=13:style=Bold" };
+static const char *fonts[]          = { "Iosevka Nerd Font Propo:size=13", "Noto Kufi Arabic:size=13:style=Bold" };
 
 /* default colors used if xrdb is not loaded */
 static char normbgcolor[]           = "#2e3440";
@@ -32,7 +32,7 @@ static char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "󰖟 ", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
+static const char *tags[] = { "󰖟", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -82,7 +82,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_z,      zoom,           {0} },
@@ -92,13 +92,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ControlMask,           XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+	{ MODKEY|ControlMask,           XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_BackSpace, xrdb,        {.v = NULL } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -122,7 +122,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("powermenu") }, 
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot") },
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("audio") },
-    { MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("wifi -d") },
+    { MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("wifi -r") },
+    { MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("bluetooth -r") },
     { MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("clipmenu -i -p '󰅌 Clipboard:'") },
     { MODKEY|ShiftMask,             XK_BackSpace, spawn,       SHCMD("toggle-layout") },    
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("bmks") },    
