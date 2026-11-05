@@ -146,7 +146,7 @@ static const Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("alacritty -e vim ~/clones/Suckless/dwmblocks-async/config.h") },
+   	{ ClkStatusText,        ShiftMask,  	Button3,	    spawn,          SHCMD("alacritty -e nvim ~/clones/Suckless/dwmblocks-async/config.h") },
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
