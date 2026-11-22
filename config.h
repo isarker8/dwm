@@ -32,7 +32,7 @@ static char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "󰖟", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
+static const char *tags[] = { "󰖟", "", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "waterfox",     NULL,       NULL,       1 << 0,       0,           -1 },
+    { "TypstVim",     NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
